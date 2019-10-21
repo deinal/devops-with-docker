@@ -1,0 +1,4 @@
+$ docker build -t frontend frontend-example-docker/
+$ docker build -t backend backend-example-docker/
+$ docker run -d -p 5000:5000 frontend
+$ docker run -d -p 8000:8000 backend
