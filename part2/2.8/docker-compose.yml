@@ -1,0 +1,50 @@
+version: '3.5' 
+
+services: 
+  db:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: example
+    container_name: database
+
+  backend:
+    image: backend
+    build: ../../backend-example-docker/
+    ports:
+      - '8000:8000'
+    environment:
+      - FRONT_URL=http://localhost
+      - REDIS=redis
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=example
+      - DB_NAME=postgres
+      - DB_HOST=database
+    depends_on:
+      - redis
+      - db
+
+  frontend:
+    image: frontend
+    build: ../../frontend-example-docker/
+    ports:
+      - '5000:5000'
+    environment:
+      - API_URL=http://localhost/api
+
+  redis:
+    image: redis
+    container_name: cache
+    ports:
+      - '6379:6379'
+
+  proxy:
+    image: nginx
+    ports:
+      - '80:80'
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    container_name: nginx
+    depends_on:
+      - frontend
+      - backend
