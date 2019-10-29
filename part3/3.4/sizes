@@ -1,0 +1,7 @@
+            before      after
+frontend:   557MB  ->   231MB
+backend:    374MB  ->   128MB
+
+Reason why it is much smaller:
+using  npm install --production
+and    node:10-alpine
