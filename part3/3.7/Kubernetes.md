@@ -1,4 +1,4 @@
-## Kuberenetes
+## Kubernetes
 
 An open-source container-orchestration system for automating application deployment, scaling, and management.
 
